@@ -9,7 +9,7 @@ import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
 //Firebase
-import { auth } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 
 class App extends React.Component {
   constructor() {
@@ -20,12 +20,26 @@ class App extends React.Component {
     }
   }
 
-  unsubscribeFromAuth = null
+  unsubscribeFromAuth = null 
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user })
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) { // userAuth is the object that come back from calling auth. if there is no logged iser comes back as null.
+        const userRef = await createUserProfileDocument(userAuth); // this function adds our user to database and returns userRef object of the current user
+
+        userRef.onSnapshot(snapShot => { // firebase method that listens to any changes to the user data, also gives back first state of that data
+          this.setState({ // updating state with snaphot.id and we spread any other data that we get from it
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        })
+      } else { // is user auth is null, ex. if user signs out, we want to set state to null, which is equal to the userAuth value when there is no user signed in
+        this.setState({ 
+          currentUser: userAuth
+        })
+      }
     })
   }
 
