@@ -12,7 +12,7 @@ const config = {
     measurementId: "G-SLW78H860N"
 };
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async (userAuth, additionalData) => { // async function that adds user to our firebase database
   if (!userAuth) return; // if we do not get back useAuth object from our auth.onAuthStateChanged in app.js
 
   // firebase give us back one of two types of object, query reference or query snapshot
