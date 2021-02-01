@@ -34,7 +34,8 @@ class App extends React.Component {
               ...snapShot.data()
             }
           })
-        })
+          console.log(this.state)
+        });
       } else { // is user auth is null, ex. if user signs out, we want to set state to null, which is equal to the userAuth value when there is no user signed in
         this.setState({ 
           currentUser: userAuth
