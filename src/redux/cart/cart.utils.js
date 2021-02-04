@@ -11,3 +11,14 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
 
     return [...cartItems, { ...cartItemToAdd, quantity: 1 }] // if existingCartItem value was false and if statement was no run, it means that item was not inside the array and we just add it as a nwe item of the array
 }
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+    const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id); //checking if item already exists in Cart
+
+    if (existingCartItem.quantity === 1) { // if our item quantity is equal to 1
+        return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id) // we filter out cartItems array, filter function will return new array with items that met the condition, when it iterates through our array and encounters out item to be removed, it does not include it, beacuse the condition we provided returns fals value, as those items match. 
+    }
+
+    return cartItems.map( cartItem => (cartItem.id === cartItemToRemove.id) ? { ...cartItem, quantity: cartItem.quantity - 1} : cartItem)
+    
+}
