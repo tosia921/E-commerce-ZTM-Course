@@ -8,7 +8,7 @@ import { selectCartTotal } from '../../redux/cart/cart.selectors';
 //reselect
 import { createStructuredSelector } from 'reselect'
 //custom components
-import CheckoutItem from '../../components/chckout-item/checkout-item.component';
+import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 
 const CheckoutPage = ({ cartItems, total }) => (
